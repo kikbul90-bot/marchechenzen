@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101112">
+<title>MarchéChenZen</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+:root {
+  --bg: #101112;
+  --card: #1b1d1f;
+  --green: #b6e35a;
+  --text: #f5f5f2;
+  --muted: #aaa;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  padding-bottom: 90px;
+}
+header {
+  padding: 25px 18px 18px;
+  background: #151617;
+  border-bottom: 1px solid #303234;
+}
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.logo span { color: var(--green); }
+
+.hero {
+  margin: 18px;
+  padding: 24px 20px;
+  min-height: 225px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #353a30, #181a18 65%);
+  border: 1px solid #41453a;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero small {
+  color: var(--green);
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+.hero h1 {
+  font-size: 34px;
+  line-height: 1.05;
+  margin: 12px 0;
+}
+.hero p {
+  color: #ccc;
+  line-height: 1.5;
+  margin: 0;
+}
+.section {
+  padding: 0 18px;
+  margin-top: 27px;
+}
+.section h2 {
+  font-size: 21px;
+  margin-bottom: 14px;
+}
+.notice {
+  background: var(--card);
+  border: 1px solid #303234;
+  border-radius: 12px;
+  padding: 17px;
+  color: #ccc;
+  line-height: 1.5;
+}
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.tile {
+  background: var(--card);
+  border: 1px solid #303234;
+  border-radius: 12px;
+  padding: 16px;
+}
+.tile b {
+  display: block;
+  margin-bottom: 8px;
+}
+.tile span {
+  color: var(--muted);
+  font-size: 13px;
+}
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #171819;
+  border-top: 1px solid #393b3d;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 3px calc(12px + env(safe-area-inset-bottom));
+  z-index: 5;
+}
+nav button {
+  background: none;
+  border: 0;
+  color: #aaa;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+nav button strong { font-size: 20px; }
+nav button.active { color: var(--green); }
+.page { display: none; }
+.page.active { display: block; }
+.btn {
+  border: 0;
+  background: var(--green);
+  color: #111;
+  font-weight: bold;
+  padding: 13px 17px;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">MARCHÉ<span>ChenZen</span></div>
+</header>
+
+<main>
+<section class="page active" id="accueil">
+  <div class="hero">
+    <small>BIENVENUE</small>
+    <h1>Le quartier.<br>Le style.</h1>
+    <p>MarchéChenZen — notre univers, directement sur Telegram.</p>
+  </div>
+
+  <div class="section">
+    <h2>Bienvenue au Marché</h2>
+    <div class="notice">
+      Découvre l'univers MarchéChenZen, son catalogue et sa communauté.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>À découvrir</h2>
+    <div class="tiles">
+      <div class="tile">
+        <b>Catalogue</b>
+        <span>Découvrir l'univers</span>
+      </div>
+      <div class="tile">
+        <b>Parrainage</b>
+        <span>La communauté</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="catalogue">
+  <div class="section">
+    <h2>Catalogue</h2>
+    <div class="notice">
+      Le catalogue sera disponible prochainement. Aucun achat ni paiement n'est activé pour le moment.
+    </div>
+  </div>
+</section>
+
+<section class="page" id="panier">
+  <div class="section">
+    <h2>Mon panier</h2>
+    <div class="notice">Ton panier est vide pour le moment.</div>
+  </div>
+</section>
+
+<section class="page" id="parrainage">
+  <div class="section">
+    <h2>Parrainage</h2>
+    <div class="notice">
+      Invite tes proches à découvrir MarchéChenZen lorsque la communauté sera ouverte.
+    </div>
+    <button class="btn" onclick="share()">Partager le bot</button>
+  </div>
+</section>
+
+<section class="page" id="contacts">
+  <div class="section">
+    <h2>Contacts</h2>
+    <div class="notice">
+      Retrouve MarchéChenZen sur Telegram pour les nouvelles et les informations.
+    </div>
+    <button class="btn" onclick="share()">Partager le bot</button>
+  </div>
+</section>
+</main>
+
+<nav>
+  <button class="active" onclick="go('accueil',this)">
+    <strong>⌂</strong>Accueil
+  </button>
+  <button onclick="go('catalogue',this)">
+    <strong>▦</strong>Catalogue
+  </button>
+  <button onclick="go('panier',this)">
+    <strong>▤</strong>Panier
+  </button>
+  <button onclick="go('parrainage',this)">
+    <strong>♧</strong>Parrainage
+  </button>
+  <button onclick="go('contacts',this)">
+    <strong>✆</strong>Contacts
+  </button>
+</nav>
+
+<script>
+const tg = window.Telegram?.WebApp;
+tg?.ready();
+tg?.expand();
+
+function go(id, button) {
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('nav button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  button.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function share() {
+  const url = 'https://t.me/MarcheChenZenShopBot';
+  if (tg?.openTelegramLink) {
+    tg.openTelegramLink(url);
+  } else {
+    window.open(url, '_blank');
+  }
+}
+</script>
+</body>
+</html>
